@@ -1,3 +1,12 @@
+:root {
+  --nasa-blue: #0b3d91;
+  --nasa-red: #fc3d21;
+  --ink: #17212b;
+  --muted: #596675;
+  --page: #eef2f6;
+  --surface: #ffffff;
+}
+
 /* Global reset & box sizing */
 * {
   box-sizing: border-box;
@@ -7,8 +16,9 @@
 
 /* Base page styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
+  font-family: 'Public Sans', Arial, sans-serif;
+  background-color: var(--page);
+  color: var(--ink);
   padding: 20px;
 }
 
@@ -26,12 +36,13 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   margin-bottom: 20px;
+  border-bottom: 3px solid var(--nasa-red);
 }
 
 h1 {
   font-family: Verdana, sans-serif;
   font-weight: bold;
-  color: #212121;
+  color: var(--nasa-blue);
 }
 
 /* Logo */
@@ -53,11 +64,11 @@ h1 {
 /* Inputs and buttons */
 input[type="date"],
 button {
-  font-family: Arial, sans-serif;
+  font-family: inherit;
   font-weight: normal;
-  color: #666;
+  color: var(--ink);
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #c5ced8;
   border-radius: 4px;
   font-size: 16px;
   line-height: 1.4;
@@ -66,12 +77,17 @@ button {
 
 /* Button specific */
 button {
-  background-color: #d3d3d3;
-  color: black;
+  background-color: var(--nasa-blue);
+  color: white;
   cursor: pointer;
 }
 button:hover {
-  background-color: #bfbfbf;
+  background-color: #082f70;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 /* Stack horizontally on wider screens */
@@ -101,13 +117,24 @@ button:hover {
   flex: 1 1 100%;  /* full width by default */
   min-width: 280px;
   max-width: 500px;
-  background: white;
+  background: var(--surface);
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-item:hover,
+.gallery-item:focus-visible {
+  box-shadow: 0 5px 16px rgba(11, 61, 145, 0.2);
+  outline: 2px solid var(--nasa-red);
+  outline-offset: 2px;
 }
 
 /* Three columns on wider screens */
@@ -122,6 +149,18 @@ button:hover {
   height: 200px;
   object-fit: cover;
   border-radius: 4px;
+  transition: transform 0.35s ease;
+}
+
+.gallery-item:hover img,
+.gallery-item:focus-visible img {
+  transform: scale(1.06);
+}
+
+.gallery-item h2 {
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 18px;
 }
 
 .gallery-item p {
@@ -141,4 +180,140 @@ button:hover {
 .placeholder-icon {
   font-size: 48px;
   margin-bottom: 20px;
+}
+
+.space-fact {
+  margin: 0 20px;
+  padding: 16px 20px;
+  border-left: 4px solid var(--nasa-red);
+  background: var(--surface);
+}
+
+.space-fact h2 {
+  margin-bottom: 6px;
+  color: var(--nasa-blue);
+  font-size: 18px;
+}
+
+.space-fact p,
+.modal-explanation {
+  line-height: 1.6;
+}
+
+.video-preview {
+  display: grid;
+  min-height: 200px;
+  place-items: center;
+  border-radius: 4px;
+  background: var(--nasa-blue);
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.unavailable-preview {
+  background: #e3e9f0;
+  color: var(--muted);
+}
+
+.image-fallback {
+  margin: 20px 0;
+  padding: 18px;
+  border-left: 4px solid var(--nasa-red);
+  background: var(--page);
+}
+
+.image-fallback a {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--nasa-blue);
+  font-weight: 600;
+}
+
+.image-modal {
+  position: relative;
+  width: min(900px, calc(100% - 32px));
+  max-width: none;
+  max-height: 90vh;
+  margin: auto;
+  padding: 28px;
+  overflow: auto;
+  border: 0;
+  border-top: 5px solid var(--nasa-red);
+  border-radius: 6px;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.image-modal::backdrop {
+  background: rgba(5, 20, 42, 0.78);
+}
+
+.close-modal {
+  position: sticky;
+  top: 0;
+  float: right;
+  width: 40px;
+  height: 40px;
+  margin: -12px -12px 0 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.modal-content h2 {
+  padding-right: 36px;
+  color: var(--nasa-blue);
+}
+
+.modal-date {
+  margin: 8px 0 16px;
+  color: var(--muted);
+}
+
+.modal-image {
+  display: block;
+  width: 100%;
+  max-height: 55vh;
+  margin-bottom: 20px;
+  object-fit: contain;
+  background: #101820;
+}
+
+.modal-content h3 {
+  margin: 16px 0 6px;
+  color: var(--nasa-blue);
+}
+
+.modal-explanation {
+  white-space: pre-line;
+}
+
+.video-message {
+  margin: 20px 0 10px;
+}
+
+.video-link {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 4px;
+  color: white;
+  background: var(--nasa-blue);
+  text-decoration: none;
+}
+
+.video-link:hover {
+  background: #082f70;
+}
+
+@media (max-width: 599px) {
+  .image-modal {
+    padding: 20px;
+  }
+
+  .space-fact {
+    margin: 0;
+  }
 }
